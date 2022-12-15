@@ -3,9 +3,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class AdminDAO {
-        private List<Teacher> teachers = new ArrayList<>();
+        private static List<Teacher> teachers = new ArrayList<>();
         private static Statement statement = null;
         private ResultSet resultSet = null;
         private int columnCount;
@@ -148,5 +149,34 @@ public class AdminDAO {
         }
         return false;
     }
+
+
+    public static Vector<String> getAllTeachers(){
+        Vector<String> result = new Vector<String>();
+
+        try{
+            Statement statement = null;
+            ResultSet resultSet = null;
+
+            statement = teacherTrackerDB.connect().createStatement();
+            String selectStatement = "select teacherID, teacherName, teacherSurname, subjectTaught, teacherUsername from teacher_info";
+            resultSet = statement.executeQuery(selectStatement);
+
+            while(resultSet.next()){
+                String wholeInfo = resultSet.getInt(1)
+                        + " " + resultSet.getString(2)
+                        + " " + resultSet.getString(3)
+                        + " " + resultSet.getString(4)
+                        + " " + resultSet.getString(5);
+
+                result.add(wholeInfo);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+
 
 }

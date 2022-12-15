@@ -95,10 +95,10 @@ public class AdminLoginWindow extends JFrame implements ActionListener{
             setVisible(false);
         }
         else if(e.getSource() == loginButton){
-            if(AdminDAO.adminLogin(username.getText(), String.valueOf(password.getPassword()))){
+            boolean isSuccessfulLogin = AdminDAO.adminLogin(username.getText(), String.valueOf(password.getPassword()));
+            if(isSuccessfulLogin){
                 setVisible(false);
                 new AdminHomePage();
-
             }
         }
     }

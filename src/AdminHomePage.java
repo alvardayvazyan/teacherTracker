@@ -5,13 +5,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AdminHomePage extends JFrame implements ActionListener {
-
     JButton addTeacher = new JButton("Add Teacher");
     JButton viewTeachers = new JButton("View Teachers");
     JButton deleteTeacher = new JButton("Delete Teacher");
     JButton updateTeacher = new JButton("Update Teacher");
     JButton addSchedule = new JButton("Add Schedule");
     JButton updateSchedule = new JButton("Update Schedule");
+
+    JPanel buttons = new JPanel();
+
+    JPanel viewAllTeachers = new JPanel();
+    private JScrollPane teachersListScroll = null;
+    private DefaultListModel allTeachersData = new DefaultListModel();
+    private JList allTeachersList = new JList(allTeachersData);
+    JButton backToMainPart = new JButton("Back");
 
 
     public AdminHomePage()
@@ -45,12 +52,24 @@ public class AdminHomePage extends JFrame implements ActionListener {
 
 
         //PANEL BUTTONS
-        JPanel buttons = new JPanel();
         buttons.setLayout(null);
         //buttons.setSize(900, 400);
         buttons.setBorder(border);
         buttons.setBounds(300, 200, 400, 500);
 
+        viewAllTeachers.setLayout(new FlowLayout());
+        viewAllTeachers.setBorder(border);
+        viewAllTeachers.setBounds(300, 200, 400, 500);
+
+        backToMainPart.addActionListener(this);
+
+        teachersListScroll = new JScrollPane(allTeachersList);
+
+        viewAllTeachers.add(teachersListScroll);
+        viewAllTeachers.add(backToMainPart);
+
+        viewAllTeachers.setVisible(false);
+        add(viewAllTeachers);
 
         //BUTTONS
         Font buttonFont = new Font("Poppins", Font.BOLD, 13);
@@ -59,6 +78,7 @@ public class AdminHomePage extends JFrame implements ActionListener {
         viewTeachers.setBackground(new Color(51, 153, 102));
         viewTeachers.setForeground(Color.white);
         viewTeachers.setFont(buttonFont);
+        viewTeachers.addActionListener(this);
 
 
         addTeacher.setBounds(50, 120, 300, 50);
@@ -126,6 +146,17 @@ public class AdminHomePage extends JFrame implements ActionListener {
         else if(e.getSource() == addSchedule){
             new AddScheduleWindow();
             setVisible(false);
+        }
+        else if(e.getSource() == viewTeachers) {
+            allTeachersData.clear();
+            allTeachersData.addAll(AdminDAO.getAllTeachers());
+
+            buttons.setVisible(false);
+            viewAllTeachers.setVisible(true);
+        }
+        else if (e.getSource() == backToMainPart){
+            viewAllTeachers.setVisible(false);
+            buttons.setVisible(true);
         }
     }
 }

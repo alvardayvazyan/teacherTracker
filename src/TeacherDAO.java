@@ -54,13 +54,11 @@ public class TeacherDAO {
             resultSet = statement.executeQuery(selectDay);
 
             while(resultSet.next()){
-                String wholeInfo = "";
-                wholeInfo += resultSet.getString(1)
-                            + " " +resultSet.getString(2)
+                String wholeInfo = resultSet.getString(1)
+                            + " " + resultSet.getString(2)
                             + " " + resultSet.getString(3);
 
                 result.add(wholeInfo);
-
             }
 
         } catch (SQLException e) {
@@ -68,7 +66,6 @@ public class TeacherDAO {
         }
         return result;
     }
-
 
 
 }

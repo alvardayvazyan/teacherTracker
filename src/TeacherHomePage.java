@@ -123,11 +123,11 @@ public class TeacherHomePage extends JFrame implements ActionListener {
         thirdLesson.setText("");
         Vector<String> lessons = TeacherDAO.getTeacherSpecificDayLessons(TeacherDAO.loggedInTeacher.getTeacherID(), day);
         System.out.println(lessons.size());
-        if (lessons.size() > 0) {
+        if(lessons.size() > 0){
             firstLesson.setText(lessons.get(0));
-            if (lessons.size() > 1) {
+            if(lessons.size() > 1){
                 secondLesson.setText(lessons.get(1));
-                if (lessons.size() > 2) {
+                if(lessons.size() > 2){
                     thirdLesson.setText(lessons.get(2));
                 }
             }

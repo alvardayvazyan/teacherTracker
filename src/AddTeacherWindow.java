@@ -112,11 +112,17 @@ public class AddTeacherWindow extends JFrame implements ActionListener{
 //        String subjectList = (String)cb.getSelectedItem();
 
         if(e.getSource() == submitBtn){
-            AdminDAO.insertTeacherRow(new   Teacher(teacherName.getText(),
+            if(AdminDAO.insertTeacherRow(new   Teacher(teacherName.getText(),
                                             teacherSurname.getText(),
                                             subject.getText(),
                                             teacherUsername.getText(),
-                                            teacherPassword.getPassword()));
+                                            teacherPassword.getPassword()))){
+                teacherName.setText("");
+                teacherSurname.setText("");
+                subject.setText("");
+                teacherUsername.setText("");
+                teacherPassword.setText("");
+            }
         }
         else if (e.getSource() == goBack) {
             new AdminHomePage();
